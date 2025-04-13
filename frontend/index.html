@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web API Client</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Call the Web API</h1>
+    <button id="greetButton">Get Greeting</button>
+    <div id="response"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const greetButton = document.getElementById('greetButton');
+            const responseDiv = document.getElementById('response');
+
+            greetButton.addEventListener('click', function() {
+                fetch('/greet') // Assuming Nginx serves the frontend
+                    .then(response => response.json())
+                    .then(data => {
+                        responseDiv.textContent = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        responseDiv.textContent = 'Error fetching greeting: ' + error;
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
